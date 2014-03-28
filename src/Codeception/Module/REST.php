@@ -555,7 +555,6 @@ class REST extends \Codeception\Module
     public function grabDataFromJsonResponse($path)
     {
         $data = $response = json_decode($this->response, true);
-
         if (json_last_error() !== JSON_ERROR_NONE) {
             $this->fail('Response is not of JSON format or is malformed');
             $this->debugSection('Response', $this->response);
@@ -565,7 +564,10 @@ class REST extends \Codeception\Module
             return $data;
         }
 
-        foreach (explode('.', $path) as $key) {
+        foreach (preg_split("/(?<=[a-zA-Z])\./", $path) as $key) {			
+			
+			$key = str_replace("\\.",".",$key);
+			
             if (!is_array($data) || !array_key_exists($key, $data)) {
                 $this->fail('Response does not have required data');
                 $this->debugSection('Response', $response);
