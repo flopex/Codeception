@@ -566,7 +566,7 @@ class REST extends \Codeception\Module
 
         foreach (preg_split("/(?<=[a-zA-Z])\./", $path) as $key) {			
 			
-			$key = str_replace("\\.",".",$key);
+	    $key = str_replace("\\.",".",$key);
 			
             if (!is_array($data) || !array_key_exists($key, $data)) {
                 $this->fail('Response does not have required data');
